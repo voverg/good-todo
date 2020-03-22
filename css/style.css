@@ -64,7 +64,7 @@ body {
 }
 .item {
     width:380px;
-    height: 45px;
+    /*height: 45px;*/
     min-height: 45px;
     position: relative;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -86,14 +86,14 @@ body {
     color:#6eb200;
 }
 .item p.text {
-    position: absolute;
-    padding:0;
+    /*position: absolute;*/
+    padding: 10px 55px;
     margin:0;
     font-size: 20px;
     left:50px;
     top:10px;
     background-color: #FFF;
-    max-width:285px;
+    max-width: 285px;
 }
 .lineThrough {
     text-decoration: line-through;
