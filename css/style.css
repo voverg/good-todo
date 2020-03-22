@@ -179,6 +179,12 @@ body {
         width: 100%;
         height: 90vh;
     }
+    .header {
+        height: 250px;
+    }
+    .signature {
+        top: 10px;
+    }
     .add-to-do {
         height: 90px;
         padding: 15px 10px;
