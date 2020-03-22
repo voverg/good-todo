@@ -180,10 +180,15 @@ body {
         height: 90vh;
     }
     .add-to-do {
-        height: 90;
+        height: 90px;
+        padding: 15px 10px;
+    }
+    .add-to-do i {
+        top: 15px;
     }
     .add-to-do input {
         width: 80%;
+        height: 45px;
     }
 }
 
