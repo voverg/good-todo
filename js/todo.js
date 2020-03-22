@@ -9,7 +9,31 @@ const CHECK = 'fa-check-circle';
 const UNCHECK = 'fa-circle-thin';
 const LINE_THROUGH = 'lineThrough';
 // Variables
-let taskList = [], deletedList = [], id = 0;
+let taskList, id;
+
+// Get data from localStorage
+let data = localStorage.getItem('taskList');
+if (data) {
+    taskList = JSON.parse(data);
+    id = taskList.length;
+
+    loadList(taskList);
+} else {
+    taskList = [];
+    id = 0;
+}
+// Creat UI of loaded taskList from localStorage
+function loadList(array) {
+    array.forEach(function(item) {
+        if (!item.trash) {
+            addToDo(item.name, item.id, item.done, item.trash);
+        }
+    });
+}
+// Set data to localStorage
+function addDataToLocalStorage() {
+    localStorage.setItem('taskList', JSON.stringify(taskList));
+}
 
 //Show today date
 const options = {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
@@ -43,23 +67,27 @@ function addItemToTaskList(toDo, id, done, trash) {
         done: done,
         trash: trash
     })
+
+    addDataToLocalStorage();
 }
 
 // Complete to do
-function completeToDo (elem) {
+function completeToDo(elem) {
     elem.classList.toggle(CHECK);
     elem.classList.toggle(UNCHECK);
     elem.parentNode.querySelector('.text').classList.toggle(LINE_THROUGH);
 
     taskList[elem.id].done = taskList[elem.id].done ? false : true;
+
+    addDataToLocalStorage();
 }
 
 // Remove to do
-function removeToDo (elem) {
+function removeToDo(elem) {
     elem.parentNode.parentNode.removeChild(elem.parentNode);
     taskList[elem.id].trash = true;
 
-    deletedList.push(taskList[elem.id]);
+    addDataToLocalStorage();
 }
 
 // Event listeners
@@ -95,5 +123,14 @@ list.addEventListener('click', function (event) {
         completeToDo(elem);
     } else  if (elemJob == 'delete') {
         removeToDo(elem);
+    }
+})
+
+// Clear localStorage
+clear.addEventListener('click', function () {
+    const result = confirm('Эй, ты, точно хочешь удалить все задачи?');
+    if (result) {
+        localStorage.clear();
+        location.reload();
     }
 })
