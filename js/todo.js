@@ -9,7 +9,7 @@ const CHECK = 'fa-check-circle';
 const UNCHECK = 'fa-circle-thin';
 const LINE_THROUGH = 'lineThrough';
 // Variables
-let taskList, id;
+let taskList, id, icons;
 
 // Get data from localStorage
 let data = localStorage.getItem('taskList');
@@ -24,6 +24,7 @@ if (data) {
 }
 // Creat UI of loaded taskList from localStorage
 function loadList(array) {
+    ul.innerHTML = '';
     array.forEach(function(item) {
         if (!item.trash) {
             addToDo(item.name, item.id, item.done, item.trash);
@@ -90,6 +91,23 @@ function removeToDo(elem) {
     addDataToLocalStorage();
 }
 
+// Search function
+function searchFilter(array, val) {
+    ul.innerHTML = '';
+    array.forEach(function(item) {
+        let text = item.name.toLowerCase();
+        if (!item.trash && text.includes(val)) {
+            text = `${text.slice(0, text.search(val))}<mark>${val}</mark>${text.slice(text.search(val) + val.length)}`;
+            addToDo(text, item.id, item.done, item.trash);
+        }
+    });
+}
+// Change plusButton icon
+function changePlusButton () {
+        plusButton.classList.remove(icons[0], icons[1]);
+        plusButton.classList.add(icons[2]);
+}
+
 // Event listeners
 // Add item to the list by user enter key
 input.addEventListener('keyup', function(event) {
@@ -105,14 +123,19 @@ input.addEventListener('keyup', function(event) {
 // Add item to the list by click plus button
 plusButton.addEventListener('click', function() {
     const toDo = input.value;
-    if (toDo.trim() != '') {
+    if (plusButton.classList.contains('fa-plus-circle') && toDo.trim() != '') {
         addToDo(toDo, id, false, false);
         addItemToTaskList(toDo, id, false, false);
 
         id++;
         input.value = '';
-        input.focus();
+    } else if (plusButton.classList.contains('fa-close')) {
+        input.value = ''; 
+        icons = ['fa-close', 'fa-search', 'fa-plus-circle'];
+        changePlusButton(icons);
+        loadList(taskList);
     }
+    input.focus();
 })
 
 // Complite or remove tasks
@@ -124,6 +147,7 @@ list.addEventListener('click', function (event) {
     } else  if (elemJob == 'delete') {
         removeToDo(elem);
     }
+    input.focus();
 })
 
 // Clear localStorage
@@ -132,5 +156,24 @@ clear.addEventListener('click', function () {
     if (result) {
         localStorage.clear();
         location.reload();
+    }
+})
+
+// Search filter
+input.addEventListener('input', function () {
+    let val = input.value.toLowerCase().trim();
+    if (val == '/' && val.length == 1) {
+        icons = ['fa-plus-circle', 'fa-close', 'fa-search'];
+        changePlusButton(icons);
+        loadList(taskList);
+    } else if (val[0] == '/' && val.length > 1) {
+        icons = ['fa-search', 'fa-plus-circle', 'fa-close'];
+        changePlusButton(icons);
+
+        val = val.slice(1);
+        searchFilter(taskList, val);
+    } else {
+        icons = ['fa-search', 'fa-close', 'fa-plus-circle'];
+        changePlusButton(icons);
     }
 })
