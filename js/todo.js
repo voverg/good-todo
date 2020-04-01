@@ -170,7 +170,7 @@ input.addEventListener('input', function () {
         icons = ['fa-search', 'fa-plus-circle', 'fa-close'];
         changePlusButton(icons);
 
-        val = val.slice(1);
+        val = val.slice(1).trim();
         searchFilter(taskList, val);
     } else {
         icons = ['fa-search', 'fa-close', 'fa-plus-circle'];
