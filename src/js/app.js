@@ -191,7 +191,7 @@ ul.addEventListener('click', function (event) {
             removeToDo(elem);
         }
     }
-    input.focus();
+    // input.focus();
 })
 
 // Clear localStorage
