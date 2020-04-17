@@ -9,7 +9,7 @@ module.exports = {
     // context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {
-        todo: ['./src/js/app.js']
+        app: ['./src/js/app.js']
     },
     output: {
         filename: '[name].js',
