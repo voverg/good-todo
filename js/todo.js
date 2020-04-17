@@ -1,6 +1,7 @@
 // Select the elements
 const clear = document.querySelector('.clear');
 const dateElement = document.querySelector('#date');
+const filterElem = document.querySelector('.filter');
 const ul = document.querySelector('#list');
 const plusButton = document.querySelector('#plus-button');
 const input = document.querySelector('#input');
@@ -35,26 +36,56 @@ function loadList(array) {
 function addDataToLocalStorage() {
     localStorage.setItem('taskList', JSON.stringify(taskList));
 }
+// Filter function
+function taskFilter (array, status) {
+    if (status === 'current') {
+        loadList(taskList);
+    } else if (status === 'done') {
+        ul.innerHTML = '';
+        array.forEach(function(item) {
+            if (item.done && !item.trash) {
+                addToDo(item.name, item.id, item.done, item.trash);
+            }
+        })
+    } else if (status === 'deleted') {
+        ul.innerHTML = '';
+        array.forEach(function(item) {
+            if (item.trash) {
+                // addToDo(item.name, item.id, item.done, item.trash);
+                const elem = `
+                <li class="item">
+                    <p class="text">${item.name}</p>
+                </li>
+                `;
+    ul.insertAdjacentHTML('beforeend', elem);
+            }
+        })
+    }
+}
 
 //Show today date
 const options = {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
 const today = new Date();
 dateElement.innerHTML = today.toLocaleDateString('ru-RU', options);
 
+// Delete active class from anactive filter UI
+function deleteFilterActiveClass() {
+    Array.from(filterElem.children).forEach(function(elem) {
+        elem.classList.remove('filter__item-active');
+    })
+}
+
 // Add to-do UI function
 function addToDo(toDo, id, done, trash) {
-    if (trash) { 
-        return;
-    }
     // check if item is done
     const DONE = done ? CHECK : UNCHECK;
     const LINE = done ? LINE_THROUGH : '';
     // create item UI
     const item = `
                 <li class="item">
-                    <i class="fa ${DONE} co" job="complete" id="${id}"></i>
+                    <i class="fa ${DONE} co" data-job="complete" data-id="${id}"></i>
                     <p class="text ${LINE}">${toDo}</p>
-                    <i class="fa fa-trash-o de" job="delete" id="${id}"></i>
+                    <i class="fa fa-trash-o de" data-job="delete" data-id="${id}"></i>
                 </li>
                 `;
     const position = 'beforeend';
@@ -77,8 +108,7 @@ function completeToDo(elem) {
     elem.classList.toggle(CHECK);
     elem.classList.toggle(UNCHECK);
     elem.parentNode.querySelector('.text').classList.toggle(LINE_THROUGH);
-
-    taskList[elem.id].done = taskList[elem.id].done ? false : true;
+    taskList[elem.dataset.id].done = taskList[elem.dataset.id].done ? false : true;
 
     addDataToLocalStorage();
 }
@@ -86,7 +116,7 @@ function completeToDo(elem) {
 // Remove to do
 function removeToDo(elem) {
     elem.parentNode.parentNode.removeChild(elem.parentNode);
-    taskList[elem.id].trash = true;
+    taskList[elem.dataset.id].trash = true;
 
     addDataToLocalStorage();
 }
@@ -94,6 +124,8 @@ function removeToDo(elem) {
 // Search function
 function searchFilter(array, val) {
     ul.innerHTML = '';
+    deleteFilterActiveClass();
+    filterElem.querySelector('[data-status="current"]').classList.add('filter__item-active');
     array.forEach(function(item) {
         let text = item.name.toLowerCase();
         if (!item.trash && text.includes(val)) {
@@ -108,7 +140,17 @@ function changePlusButton () {
         plusButton.classList.add(icons[2]);
 }
 
-// Event listeners
+// --------------------------------------------- Event listeners
+// Task filters
+filterElem.addEventListener('click', function(event) {
+    const status = event.target.dataset.status;
+    if (status === 'current' || status === 'done' || status === 'deleted') {
+        deleteFilterActiveClass();
+        event.target.classList.add('filter__item-active');
+
+        taskFilter(taskList, status);
+    }
+})
 // Add item to the list by user enter key
 input.addEventListener('keyup', function(event) {
     const toDo = input.value;
@@ -139,13 +181,15 @@ plusButton.addEventListener('click', function() {
 })
 
 // Complite or remove tasks
-list.addEventListener('click', function (event) {
+ul.addEventListener('click', function (event) {
     const elem = event.target;
-    const elemJob = elem.attributes.job.value;
-    if (elemJob == 'complete') {
-        completeToDo(elem);
-    } else  if (elemJob == 'delete') {
-        removeToDo(elem);
+    if (elem.dataset.job) {
+        const elemJob = elem.dataset.job;
+        if (elemJob == 'complete') {
+            completeToDo(elem);
+        } else  if (elemJob == 'delete') {
+            removeToDo(elem);
+        }
     }
     input.focus();
 })
@@ -163,6 +207,8 @@ clear.addEventListener('click', function () {
 input.addEventListener('input', function () {
     let val = input.value.toLowerCase().trim();
     if (val == '/' && val.length == 1) {
+        deleteFilterActiveClass();
+        filterElem.querySelector('[data-status="current"]').classList.add('filter__item-active');
         icons = ['fa-plus-circle', 'fa-close', 'fa-search'];
         changePlusButton(icons);
         loadList(taskList);
