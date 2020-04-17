@@ -12,23 +12,23 @@ This is a simple application written by html, css and clean javascript. In order
 
 This ES6 standard project rebuild with webpack and babel to be cross browsers.
 
-![quiz](D:\Programming\Pet_projects\Web-apps\good-todo\src\img\good_todo_screenshot.png)
+![quiz](https://github.com/voverg/good-todo/blob/master/src/img/good_todo_screenshot.png)
 
 if you want to use search by tasks, you should writ a **/** symbol in **input** field
 
-![quiz](D:\Programming\Pet_projects\Web-apps\good-todo\src\img\good_todo_begin_search_screenshot.png)
+![quiz](https://github.com/voverg/good-todo/blob/master/src/img/good_todo_begin_search_screenshot.png)
 
 and then start to write a task that you want to find
 
-![quiz](D:\Programming\Pet_projects\Web-apps\good-todo\src\img\good_todo_search_screenshot.png)
+![quiz](https://github.com/voverg/good-todo/blob/master/src/img/good_todo_search_screenshot.png)
 
 Also you can use task filters such as **current tasks**, **done tasks** or **deleted tasks**
 
-![quiz](D:\Programming\Pet_projects\Web-apps\good-todo\src\img\good_todo_filters_screenshot.png)
+![quiz](https://github.com/voverg/good-todo/blob/master/src/img/good_todo_filters_screenshot.png)
 
 If you want to remove all your tasks from local storage, push the button in the header in the right top corner.
 
-![quiz](D:\Programming\Pet_projects\Web-apps\good-todo\src\img\good_todo_clear_tasks_screenshot.png)
+![quiz](https://github.com/voverg/good-todo/blob/master/src/img/good_todo_clear_tasks_screenshot.png)
 
 -----
 
