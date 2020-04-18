@@ -29,7 +29,7 @@ if (data) {
 function loadList(array) {
     ul.innerHTML = '';
     array.forEach(function(item) {
-        if (!item.trash) {
+        if (!item.trash && !item.done) {
             addToDo(item.name, item.id, item.done, item.trash);
         }
     });
@@ -112,14 +112,15 @@ function completeToDo(elem) {
     elem.classList.toggle(UNCHECK);
     elem.parentNode.querySelector('.text').classList.toggle(LINE_THROUGH);
     taskList[elem.dataset.id].done = taskList[elem.dataset.id].done ? false : true;
+    ul.removeChild(elem.parentNode);
 
     addDataToLocalStorage();
 }
 
 // Remove to do
 function removeToDo(elem) {
-    elem.parentNode.parentNode.removeChild(elem.parentNode);
     taskList[elem.dataset.id].trash = true;
+    ul.removeChild(elem.parentNode);
 
     addDataToLocalStorage();
 }
@@ -127,8 +128,8 @@ function removeToDo(elem) {
 // Search function
 function searchFilter(array, val) {
     ul.innerHTML = '';
-    deleteFilterActiveClass();
-    filterElem.querySelector('[data-status="current"]').classList.add('filter__item-active');
+    // deleteFilterActiveClass();
+    // filterElem.querySelector('[data-status="current"]').classList.add('filter__item-active');
     array.forEach(function(item) {
         let text = item.name.toLowerCase();
         if (!item.trash && text.includes(val)) {
@@ -156,15 +157,17 @@ filterElem.addEventListener('click', function(event) {
 })
 // Add item to the list by user enter key
 input.addEventListener('keyup', function(event) {
-    deleteFilterActiveClass();
-    filterElem.querySelector('[data-status="current"]').classList.add('filter__item-active');
-    loadList(taskList);
+
 
     const toDo = input.value;
     if (event.keyCode == 13 && toDo.trim() != '') {
         wikiElem.classList.add('hide');
         addToDo(toDo, id, false, false);
         addItemToTaskList(toDo, id, false, false);
+        // Change tab to curent and update list of the task UI
+        deleteFilterActiveClass();
+        filterElem.querySelector('[data-status="current"]').classList.add('filter__item-active');
+        loadList(taskList);
 
         id++;
         input.value = '';
