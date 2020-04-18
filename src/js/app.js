@@ -1,4 +1,5 @@
 // Select the elements
+const wikiElem = document.querySelector('.wiki');
 const clear = document.querySelector('.clear');
 const dateElement = document.querySelector('#date');
 const filterElem = document.querySelector('.filter');
@@ -23,6 +24,7 @@ if (data) {
     taskList = [];
     id = 0;
 }
+
 // Creat UI of loaded taskList from localStorage
 function loadList(array) {
     ul.innerHTML = '';
@@ -32,9 +34,22 @@ function loadList(array) {
         }
     });
 }
+
 // Set data to localStorage
 function addDataToLocalStorage() {
     localStorage.setItem('taskList', JSON.stringify(taskList));
+}
+
+//Show today date
+const options = {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
+const today = new Date();
+dateElement.innerHTML = today.toLocaleDateString('ru-RU', options);
+
+// Delete active class from anactive filter UI
+function deleteFilterActiveClass() {
+    Array.from(filterElem.children).forEach(function(elem) {
+        elem.classList.remove('filter__item-active');
+    })
 }
 // Filter function
 function taskFilter (array, status) {
@@ -61,18 +76,6 @@ function taskFilter (array, status) {
             }
         })
     }
-}
-
-//Show today date
-const options = {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
-const today = new Date();
-dateElement.innerHTML = today.toLocaleDateString('ru-RU', options);
-
-// Delete active class from anactive filter UI
-function deleteFilterActiveClass() {
-    Array.from(filterElem.children).forEach(function(elem) {
-        elem.classList.remove('filter__item-active');
-    })
 }
 
 // Add to-do UI function
@@ -153,8 +156,13 @@ filterElem.addEventListener('click', function(event) {
 })
 // Add item to the list by user enter key
 input.addEventListener('keyup', function(event) {
+    deleteFilterActiveClass();
+    filterElem.querySelector('[data-status="current"]').classList.add('filter__item-active');
+    loadList(taskList);
+
     const toDo = input.value;
     if (event.keyCode == 13 && toDo.trim() != '') {
+        wikiElem.classList.add('hide');
         addToDo(toDo, id, false, false);
         addItemToTaskList(toDo, id, false, false);
 
