@@ -82,6 +82,18 @@ body {
     font-weight: bold;
 }
 
+/* -------------- wiki -------------*/
+.wiki {
+    padding: 10px 30px;
+    color: #555;
+}
+.wiki p {
+    text-align: center;
+}
+.hide {
+    display: none;
+}
+
 /* ------------ content ------------ */
 .content {
     width:100%;
