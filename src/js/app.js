@@ -69,6 +69,7 @@ function taskFilter (array, status) {
                 // addToDo(item.name, item.id, item.done, item.trash);
                 const elem = `
                 <li class="item">
+                    <i class="fa fa-remove co"></i>
                     <p class="text">${item.name}</p>
                 </li>
                 `;
