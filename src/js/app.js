@@ -118,6 +118,12 @@ function completeToDo(elem) {
     addDataToLocalStorage();
 }
 
+function soundClick() {
+    let audio = new Audio();
+    audio.src = './img/right_bell.mp3';
+    audio.autoplay = true;
+}
+
 // Remove to do
 function removeToDo(elem) {
     taskList[elem.dataset.id].trash = true;
@@ -196,6 +202,7 @@ ul.addEventListener('click', function (event) {
     if (elem.dataset.job) {
         const elemJob = elem.dataset.job;
         if (elemJob == 'complete') {
+            soundClick();
             completeToDo(elem);
         } else  if (elemJob == 'delete') {
             const conf = confirm('Точно хочешь удалить эту задачу?');
