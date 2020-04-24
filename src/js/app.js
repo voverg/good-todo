@@ -113,14 +113,16 @@ function completeToDo(elem) {
     elem.classList.toggle(UNCHECK);
     elem.parentNode.querySelector('.text').classList.toggle(LINE_THROUGH);
     taskList[elem.dataset.id].done = taskList[elem.dataset.id].done ? false : true;
-    ul.removeChild(elem.parentNode);
+    setTimeout(() => {
+        ul.removeChild(elem.parentNode)
+    }, 300);
 
     addDataToLocalStorage();
 }
 
 function soundClick() {
     let audio = new Audio();
-    audio.src = './img/right_bell.mp3';
+    audio.src = './img/right_ring.mp3';
     audio.autoplay = true;
 }
 
