@@ -158,8 +158,6 @@ filterElem.addEventListener('click', function(event) {
 })
 // Add item to the list by user enter key
 input.addEventListener('keyup', function(event) {
-
-
     const toDo = input.value;
     if (event.keyCode == 13 && toDo.trim() != '') {
         wikiElem.classList.add('hide');
@@ -200,7 +198,10 @@ ul.addEventListener('click', function (event) {
         if (elemJob == 'complete') {
             completeToDo(elem);
         } else  if (elemJob == 'delete') {
-            removeToDo(elem);
+            const conf = confirm('Точно хочешь удалить эту задачу?');
+            if (conf) {
+                removeToDo(elem);
+            }
         }
     }
     // input.focus();
