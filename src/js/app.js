@@ -21,6 +21,7 @@ if (data) {
 
     loadList(taskList);
 } else {
+    wikiElem.classList.remove('hide');
     taskList = [];
     id = 0;
 }
