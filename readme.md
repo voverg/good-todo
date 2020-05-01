@@ -10,7 +10,8 @@
 
 This is a simple application written by html, css and clean javascript. In order to see a demo version of this app go to Github Pages [this link](https://voverg.github.io/good-todo/ 'Look task manager demo')
 
-Start write a text in input field and then push the **Enter** on your keyboard or 'Plus' button in bottom left corner next to the input field to add a task to the task list.
+Start write a text in input field and then push the **Enter** on your keyboard or 'Plus' button in bottom left corner next to the input field to add a task to the task list. You can edit any task by clicking to it and push 
+the "Enter" button on your keyboard to apply changes.
 
 This ES6 standard project rebuild with webpack and babel to be cross browsers.
 

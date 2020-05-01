@@ -89,7 +89,7 @@ function addToDo(toDo, id, done, trash) {
     const item = `
                 <li class="item">
                     <i class="fa ${DONE} co" data-job="complete" data-id="${id}"></i>
-                    <p class="text ${LINE}">${toDo}</p>
+                    <p class="text ${LINE}" contenteditable="true">${toDo}</p>
                     <i class="fa fa-trash-o de" data-job="delete" data-id="${id}"></i>
                 </li>
                 `;
@@ -134,6 +134,29 @@ function removeToDo(elem) {
 
     addDataToLocalStorage();
 }
+
+// Edit todo function
+function editTask (elem) {
+    const id = elem.closest('li').children[0].dataset.id;
+
+    elem.addEventListener('keydown', event => {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            elem.blur();
+            taskList[id].name = elem.textContent;
+
+            addDataToLocalStorage();
+        }
+    });
+
+    elem.addEventListener('blur', event => {
+            taskList[id].name = elem.textContent;
+
+            addDataToLocalStorage();
+    })
+}
+
+
 
 // Search function
 function searchFilter(array, val) {
@@ -213,6 +236,8 @@ ul.addEventListener('click', function (event) {
                 removeToDo(elem);
             }
         }
+    } else if (elem.classList.contains('text')) {
+        editTask(elem);
     }
     // input.focus();
 })
