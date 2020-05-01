@@ -130,7 +130,7 @@ function soundClick() {
 // Remove to do
 function removeToDo(elem) {
     taskList[elem.dataset.id].trash = true;
-    ul.removeChild(elem.parentNode);
+    ul.removeChild(elem.closest('li'));
 
     addDataToLocalStorage();
 }
