@@ -135,7 +135,7 @@ function removeToDo(elem) {
     addDataToLocalStorage();
 }
 
-// Edit todo function
+// Edit task note function
 function editTask (elem) {
     const id = elem.closest('li').children[0].dataset.id;
 
@@ -143,16 +143,18 @@ function editTask (elem) {
         if (event.keyCode === 13) {
             event.preventDefault();
             elem.blur();
-            taskList[id].name = elem.textContent;
-
-            addDataToLocalStorage();
         }
     });
 
     elem.addEventListener('blur', event => {
+        if (!elem.textContent.trim()) {
+            taskList[id].trash = true;
+            ul.removeChild(elem.closest('li'));
+        } else {
             taskList[id].name = elem.textContent;
+        }
 
-            addDataToLocalStorage();
+        addDataToLocalStorage();
     })
 }
 
