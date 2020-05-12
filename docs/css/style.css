@@ -109,21 +109,19 @@ body {
     margin:0;
 }
 .item {
+    display: flex;
     width:100%;
-    /*height: 45px;*/
     min-height: 45px;
-    position: relative;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     list-style: none;
     padding: 0;
     margin: 0;
 }
-.item i.co {
-    position: absolute;
+.item i {
+    padding: 10px;
+}
+.item i.co, .item i.de {
     font-size: 25px;
-    padding-left:5px;
-    left:15px;
-    top:10px;
 }
 .item i.co:hover {
     cursor: pointer;
@@ -132,24 +130,17 @@ body {
     color:#6eb200;
 }
 .item p.text {
-    /*position: absolute;*/
-    margin: 0;
-    padding: 10px 55px;
-    font-size: 20px;
-    left:50px;
-    top:10px;
-    background-color: #FFF;
+    align-self: center;
     width: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 20px;
+    background-color: #FFF;
+    outline: none;
 }
 .lineThrough {
     text-decoration: line-through;
     color : #ccc;
-}
-.item i.de {
-    position: absolute;
-    font-size: 25px;
-    right:15px;
-    top:10px;
 }
 .item i.de:hover {
     color:#af0000;
@@ -180,6 +171,7 @@ body {
     border: none;
     font-size: 20px;
     padding-left:10px;
+    outline: none;
 }
 .add-to-do input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #4162f6;
