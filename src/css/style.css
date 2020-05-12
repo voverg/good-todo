@@ -118,7 +118,7 @@ body {
     margin: 0;
 }
 .item i {
-    padding: 10px;
+    padding: 10px 20px;
 }
 .item i.co, .item i.de {
     font-size: 25px;
@@ -133,7 +133,7 @@ body {
     align-self: center;
     width: 100%;
     margin: 0;
-    padding: 5px 10px;
+    padding: 5px 0;
     font-size: 20px;
     background-color: #FFF;
     outline: none;
