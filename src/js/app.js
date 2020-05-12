@@ -85,11 +85,12 @@ function addToDo(toDo, id, done, trash) {
     // check if item is done
     const DONE = done ? CHECK : UNCHECK;
     const LINE = done ? LINE_THROUGH : '';
+    const statusEditable = done ? false : true;
     // create item UI
     const item = `
                 <li class="item">
                     <i class="fa ${DONE} co" data-job="complete" data-id="${id}"></i>
-                    <p class="text ${LINE}" contenteditable="true">${toDo}</p>
+                    <p class="text ${LINE}" contenteditable="${statusEditable}">${toDo}</p>
                     <i class="fa fa-trash-o de" data-job="delete" data-id="${id}"></i>
                 </li>
                 `;
@@ -114,6 +115,7 @@ function completeToDo(elem) {
     elem.classList.toggle(UNCHECK);
     elem.parentNode.querySelector('.text').classList.toggle(LINE_THROUGH);
     taskList[elem.dataset.id].done = taskList[elem.dataset.id].done ? false : true;
+
     setTimeout(() => {
         ul.removeChild(elem.parentNode)
     }, 300);
